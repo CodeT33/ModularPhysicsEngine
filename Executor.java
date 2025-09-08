@@ -12,10 +12,23 @@ class Executor {
         PM_Blueprint module = createModule(call.moduleName);
 
         for (var entry : call.inputs.entrySet()) {
-            module.inputs.put(entry.getKey(), entry.getValue());
+            Object value = entry.getValue();
+            Double resolvedValue;
+            if (value instanceof String) {
+                String varName = (String) value;
+                resolvedValue = variables.get(varName);
+                if (resolvedValue == null) {
+                    throw new RuntimeException("Variable " + varName + " not found");
+                }
+            } else if (value instanceof Double) {
+                resolvedValue = (Double) value;
+            } else {
+                throw new RuntimeException("Unsupported type: " + value);
+            }
+            module.inputs.put(entry.getKey(), resolvedValue);
         }
 
-        engine.addModule(module);
+        engine.addModule(module, call.outputs);
         engine.execute();
 
         for (String out : call.outputs) {
@@ -29,14 +42,18 @@ class Executor {
 
     public void execute(OutputCommand cmd) {
 
-        Map<String, Double> displayMap = new HashMap<>();
+        Map<String, Double> displayMap = new LinkedHashMap<>();
 
-        for (String out : cmd.outputs) {
-            displayMap.put(out, variables.get(out));
+        for (String varName : cmd.displayVariables) {
+            Double value = variables.get(varName);
+            if (value == null) {
+                throw new RuntimeException("Variable " + varName + " not found");
+            }
+            displayMap.put(varName, value);
         }
 
         PM_Display display = new PM_Display(displayMap);
-        engine.addModule(display);
+        engine.addModule(display, cmd.outputs);
         engine.execute();
     }
 
@@ -47,4 +64,12 @@ class Executor {
             default: throw new RuntimeException("Unknown module: " + moduleName);
         }
     }
+
+    public void printAllVariables() {
+        System.out.println("Globale Variablen:");
+        for (Map.Entry<String, Double> entry : variables.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
 }

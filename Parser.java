@@ -15,7 +15,7 @@ public class Parser {
     private Token consume(TokenType expected) {
         Token t = tokens.get(position);
         if (t.type != expected) {
-            throw new RuntimeException("Expected " + expected + " but got " + t.type);
+            throw new RuntimeException("Expected " + expected + " but got " + t.type + "[At:" + position + "]");
         }
         position++;
         return t;
@@ -30,6 +30,7 @@ public class Parser {
     }
 
     public ModuleCall parseModuleCall() {
+
         consume(TokenType.USE);
         String moduleName = consume(TokenType.IDENTIFIER).text;
 
@@ -41,7 +42,16 @@ public class Parser {
         while (true) {
             String key = consume(TokenType.IDENTIFIER).text;
             consume(TokenType.EQUALS);
-            double value = Double.parseDouble(consume(TokenType.NUMBER).text);
+
+            Token valueToken = peek();
+            Object value;
+            if (valueToken.type == TokenType.NUMBER) {
+                value = Double.parseDouble(consume(TokenType.NUMBER).text);
+            } else if (valueToken.type == TokenType.IDENTIFIER) {
+                value = consume(TokenType.IDENTIFIER).text;
+            } else {
+                throw new RuntimeException("Expected NUMBER or IDENTIFIER but got " + valueToken.type);
+            }
             call.inputs.put(key, value);
 
             if (!match(TokenType.COMMA)) {
@@ -61,14 +71,23 @@ public class Parser {
 
         OutputCommand cmd = new OutputCommand();
 
-        cmd.outputs.add(consume(TokenType.IDENTIFIER).text);
+        do {
+            cmd.displayVariables.add(consume(TokenType.IDENTIFIER).text);
+        } while (match(TokenType.COMMA));
 
         consume(TokenType.VIA);
         cmd.display = consume(TokenType.IDENTIFIER).text;
-
         consume(TokenType.SEMICOLON);
 
         return cmd;
+    }
+
+    public List<ModuleCall> parseModuleCalls() {
+        List<ModuleCall> calls = new ArrayList<>();
+        while (peek().type == TokenType.USE) {
+            calls.add(parseModuleCall());
+        }
+        return calls;
     }
 
 }
