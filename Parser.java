@@ -15,7 +15,7 @@ public class Parser {
     private Token consume(TokenType expected) {
         Token t = tokens.get(position);
         if (t.type != expected) {
-            throw new RuntimeException("Expected " + expected + " but got " + t.type + "[At:" + position + "]");
+            throw new RuntimeException("Expected " + expected + " but got " + t.type);
         }
         position++;
         return t;

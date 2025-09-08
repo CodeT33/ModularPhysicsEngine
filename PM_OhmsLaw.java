@@ -5,25 +5,24 @@ public class PM_OhmsLaw extends PM_Blueprint {
     @Override
     public void compute(List<String> outputKeys) {
 
-        Double V = inputs.get("voltage");
-        Double R = inputs.get("resistance");
-        Double I = inputs.get("current");
+        Double voltage = inputs.get("voltage");
+        Double resistance = inputs.get("resistance");
+        Double current = inputs.get("current");
 
         List<Double> results = List.of();
 
-        if (V == null && I != null && R != null) {
-            V = I * R;
-            results = List.of(V, V, R, I);
+        if (voltage == null && current != null && resistance != null) {
+            voltage = current * resistance;
+            results = List.of(voltage);
 
-        } else if (V != null && I != null && R == null) {
-            R = V / I;
-            results = List.of(R, V, R, I);
+        } else if (voltage != null && current != null && resistance == null) {
+            resistance = voltage / current;
+            results = List.of(resistance);
 
-        } else if (V != null && I == null && R != null) {
-            I = V / R;
-            results = List.of(I, V, R, I);
-
-        } 
+        } else if (voltage != null && current == null && resistance != null) {
+            current = voltage / resistance;
+            results = List.of(current);
+        }
 
         for (int i = 0; i < outputKeys.size(); i++) {
             if (i < results.size() && results.get(i) != null) {

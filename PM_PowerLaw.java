@@ -3,28 +3,30 @@ import java.util.List;
 public class PM_PowerLaw extends PM_Blueprint {
 
     @Override
-    public void compute(List<String> outputVariableKeys) {
+    public void compute(List<String> outputKeys) {
 
-        Double V = inputs.get("voltage");
-        Double P = inputs.get("power");
-        Double I = inputs.get("current");
+        Double voltage = inputs.get("voltage");
+        Double power = inputs.get("power");
+        Double current = inputs.get("current");
 
-        if (V == null && I != null && P != null) {
-            V = P / I;
+        List<Double> results = List.of();
 
-        } else if (V != null && I != null && P == null) {
-            P = V * I;
+        if (voltage == null && current != null && power != null) {
+            voltage = power / current;
+            results = List.of(voltage);
 
-        } else if (V != null && I == null && P != null) {
-            I = P / V;
+        } else if (voltage != null && current != null && power == null) {
+            power = voltage * current;
+            results = List.of(power);
 
+        } else if (voltage != null && current == null && power != null) {
+            current = power / voltage;
+            results = List.of(current);
         }
 
-        List<Double> results = List.of(V, P, I);
-
-        for (int i = 0; i < outputVariableKeys.size(); i++) {
+        for (int i = 0; i < outputKeys.size(); i++) {
             if (i < results.size() && results.get(i) != null) {
-                outputs.put(outputVariableKeys.get(i), results.get(i));
+                outputs.put(outputKeys.get(i), results.get(i));
             }
         }
     }

@@ -59,8 +59,12 @@ class Executor {
 
     private PM_Blueprint createModule(String moduleName) {
         switch (moduleName) {
+            case "Round": return new PM_Round();
             case "OhmsLaw": return new PM_OhmsLaw();
             case "PowerLaw": return new PM_PowerLaw();
+            case "CapacitanceLaw": return new PM_CapacitanceLaw();
+            case "NewtonTwo": return new PM_NewtonTwo();
+            case "KineticEnergy": return new PM_KineticEnergy();
             default: throw new RuntimeException("Unknown module: " + moduleName);
         }
     }
