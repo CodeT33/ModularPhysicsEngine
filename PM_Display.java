@@ -1,21 +1,19 @@
-import java.util.Map;
+import java.util.*;
 
 public class PM_Display extends PM_Blueprint {
 
-    private Map<String, Double> context;
-
-    public void setContext(Map<String, Double> context) {
-        this.context = context;
+    public PM_Display(Map<String, Double> outputsToShow) {
+        this.outputs.putAll(outputsToShow);
     }
 
     @Override
-    public void compute() {
-        if (context == null || context.isEmpty()) {
-            System.out.println("Nothing to display.");
+    public void compute(List<String> outputVariableKeys) {
+        if (outputs.isEmpty()) {
+            System.out.println("Nothing to display");
             return;
         }
-        for (Map.Entry<String, Double> entry : context.entrySet()) {
-            System.out.println(entry.getKey() + " = " + entry.getValue());
+        for (Map.Entry<String, Double> entry : outputs.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }

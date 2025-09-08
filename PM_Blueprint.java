@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 abstract public class PM_Blueprint {
 
@@ -14,6 +13,6 @@ abstract public class PM_Blueprint {
         return outputs.get(name);
     }
 
-    public abstract void compute();
+    public abstract void compute(List<String> outputVariableKeys);
 }
 

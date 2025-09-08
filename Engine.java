@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/*
 public class Engine {
 
     private List<PM_Blueprint> modules = new ArrayList<>();
@@ -35,4 +33,30 @@ public class Engine {
         display.compute();
     }
 
+}
+*/
+
+class ModuleInstance {
+    PM_Blueprint module;
+    List<String> outputKeys;
+
+    ModuleInstance(PM_Blueprint module, List<String> outputKeys) {
+        this.module = module;
+        this.outputKeys = outputKeys;
+    }
+}
+
+class Engine {
+    private final List<ModuleInstance> modules = new ArrayList<>();
+
+    public void addModule(PM_Blueprint module, List<String> outputKeys) {
+        modules.add(new ModuleInstance(module, outputKeys));
+    }
+
+    public void execute() {
+        for (ModuleInstance mi : modules) {
+            mi.module.compute(mi.outputKeys);
+        }
+        modules.clear();
+    }
 }
