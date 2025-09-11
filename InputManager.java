@@ -17,7 +17,7 @@ public class InputManager {
             codeBuilder.append(System.lineSeparator());
         }
         String code = codeBuilder.toString().replaceAll("\\r?\\n", " ");
-        System.out.println(code);
+        //System.out.println(code);
         return code;
     }
 

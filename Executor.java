@@ -2,10 +2,24 @@ import java.util.*;
 
 class Executor {
     private final Map<String, Double> variables = new HashMap<>();
+
     private final Engine engine;
 
     public Executor(Engine engine) {
         this.engine = engine;
+    }
+
+    public void execute(VariableCall call) {
+        Double value;
+        if (call.valueVarName != "empty") {
+            value = variables.get(call.valueVarName);
+            if (value == null) {
+                throw new RuntimeException("Variable " + call.valueVarName + " not found");
+            }
+        } else {
+            value = call.value;
+        }
+        variables.put(call.varName, value);
     }
 
     public void execute(ModuleCall call) {
@@ -65,6 +79,8 @@ class Executor {
             case "CapacitanceLaw": return new PM_CapacitanceLaw();
             case "NewtonTwo": return new PM_NewtonTwo();
             case "KineticEnergy": return new PM_KineticEnergy();
+            //case "BasicMath": return new PM_BasicMath();
+            //Add new Module here
             default: throw new RuntimeException("Unknown module: " + moduleName);
         }
     }

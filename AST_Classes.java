@@ -1,5 +1,27 @@
 import java.util.*;
 
+class UnitConvertingCall {
+    double value;
+    String startUnit;
+    String endUnit;
+
+    @Override
+    public String toString() {
+        return "UnitConvertingCall{" + "value=" + value + ", startUnit=" + startUnit + ", endUnit=" + endUnit + "}";
+    }
+}
+
+class VariableCall {
+    String varName;
+    double value;
+    String valueVarName = "empty";
+
+    @Override
+    public String toString() {
+        return "VariableCall{" + "varName='" + varName + "\'" + ", value=" + value + ", valueVarName=" + valueVarName + "}";
+    }
+}
+
 class ModuleCall {
     String moduleName;
     Map<String, Object> inputs = new HashMap<>();
@@ -21,3 +43,5 @@ class OutputCommand {
         return "OutputModuleCall{" + "outputs=" + outputs + ", display='" + display + "'" + "}";
     }
 }
+
+

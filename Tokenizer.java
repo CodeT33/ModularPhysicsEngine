@@ -1,7 +1,9 @@
 import java.util.*;
 
 enum TokenType {
-    USE, WITH, OUT, THEN, OUTPUT, VIA, IDENTIFIER, NUMBER, EQUALS, COMMA, SEMICOLON, EOF
+    USE, WITH, OUT, THEN, OUTPUT, VIA, IDENTIFIER, NUMBER, EQUALS, COMMA, SEMICOLON, EOF, CONVERT, INTO, VAR, ADD, SUB, MUL, DIV, MOD,
+    SQUAREBRCLEFT, SQUAREBRCRIGHT, NORMALBRCLEFT, NORMALBRCRIGHT,
+    SET, GLOBALCONDS
 }
 
 class Token {
@@ -61,6 +63,60 @@ public class Tokenizer {
                 continue;
             }
 
+            if (c == '+') {
+                tokens.add(new Token(TokenType.ADD, "+"));
+                position++;
+                continue;
+            }
+
+            if (c == '-') {
+                tokens.add(new Token(TokenType.SUB, "-"));
+                position++;
+                continue;
+            }
+
+            if (c == '*') {
+                tokens.add(new Token(TokenType.MUL, "*"));
+                position++;
+                continue;
+            }
+
+            if (c == '/') {
+                tokens.add(new Token(TokenType.DIV, "/"));
+                position++;
+                continue;
+            }
+
+            if (c == '%') {
+                tokens.add(new Token(TokenType.MOD, "%"));
+                position++;
+                continue;
+            }
+
+            if (c == '(') {
+                tokens.add(new Token(TokenType.NORMALBRCLEFT, "("));
+                position++;
+                continue;
+            }
+
+            if (c == ')') {
+                tokens.add(new Token(TokenType.NORMALBRCRIGHT, ")"));
+                position++;
+                continue;
+            }
+
+            if (c == '[') {
+                tokens.add(new Token(TokenType.SQUAREBRCLEFT, "["));
+                position++;
+                continue;
+            }
+
+            if (c == ']') {
+                tokens.add(new Token(TokenType.SQUAREBRCRIGHT, "]"));
+                position++;
+                continue;
+            }
+
             //Numbers
             if (Character.isDigit(c)) {
                 StringBuilder number = new StringBuilder();
@@ -82,11 +138,28 @@ public class Tokenizer {
                 String text = word.toString();
                 TokenType type = switch (text.toUpperCase()) {
                     case "USE" -> TokenType.USE;
+                    case "use" -> TokenType.USE;
                     case "WITH" -> TokenType.WITH;
+                    case "with" -> TokenType.WITH;
                     case "OUT" -> TokenType.OUT;
+                    case "out" -> TokenType.OUT;
                     case "THEN" -> TokenType.THEN;
+                    case "then" -> TokenType.THEN;
                     case "OUTPUT" -> TokenType.OUTPUT;
+                    case "output" -> TokenType.OUTPUT;
                     case "VIA" -> TokenType.VIA;
+                    case "via" -> TokenType.VIA;
+                    case "CONVERT" -> TokenType.CONVERT;
+                    case "convert" -> TokenType.CONVERT;
+                    case "INTO" -> TokenType.INTO;
+                    case "into" -> TokenType.INTO;
+                    case "VAR" -> TokenType.VAR;
+                    case "var" -> TokenType.VAR;
+                    case "SET" -> TokenType.SET;
+                    case "set" -> TokenType.SET;
+                    case "GLOBALCONDS" -> TokenType.GLOBALCONDS;
+                    case "globalconds" -> TokenType.GLOBALCONDS;
+                    //Add new word here
                     default -> TokenType.IDENTIFIER;
                 };
                 tokens.add(new Token(type, text));

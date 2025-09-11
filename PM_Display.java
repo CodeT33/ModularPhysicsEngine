@@ -8,6 +8,7 @@ public class PM_Display extends PM_Blueprint {
 
     @Override
     public void compute(List<String> outputVariableKeys) {
+        System.out.println("\n-----");
         if (outputs.isEmpty()) {
             System.out.println("Nothing to display");
             return;
@@ -15,5 +16,6 @@ public class PM_Display extends PM_Blueprint {
         for (Map.Entry<String, Double> entry : outputs.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+        System.out.println("-----");
     }
 }

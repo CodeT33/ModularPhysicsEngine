@@ -29,6 +29,34 @@ public class Parser {
         return false;
     }
 
+    public Object parseNextCommand() {
+        Token next = peek();
+        return switch (next.type) {
+            case VAR -> parseVariableCall();
+            case USE -> parseModuleCall();
+            case THEN -> parseOutputCommand();
+            default -> throw new RuntimeException("Unexpected token " + next.type);
+        };
+    }
+
+    public VariableCall parseVariableCall () {
+        consume(TokenType.VAR);
+        VariableCall var = new VariableCall();
+        var.varName = consume(TokenType.IDENTIFIER).text;
+        consume(TokenType.EQUALS);
+
+        Token valueToken = peek();
+        if (valueToken.type == TokenType.NUMBER) {
+            var.value = Double.parseDouble(consume(TokenType.NUMBER).text);
+        } else if (valueToken.type == TokenType.IDENTIFIER) {
+            var.valueVarName = consume(TokenType.IDENTIFIER).text;
+        } else {
+            throw new RuntimeException("Expected NUMBER or IDENTIFIER but got " + valueToken.type);
+        }
+
+        return var;
+    }
+
     public ModuleCall parseModuleCall() {
 
         consume(TokenType.USE);
