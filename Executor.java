@@ -9,6 +9,21 @@ class Executor {
         this.engine = engine;
     }
 
+    public void execute(UnitConvertingCall call) {
+        Double value;
+        if (call.valueVarName != "empty") {
+            value = variables.get(call.valueVarName);
+            if (value == null) {
+                throw new RuntimeException("Variable " + call.valueVarName + " not found");
+            }
+        } else {
+            value = call.value;
+        }
+
+        Double converted = UnitConverter.convert(value, call.startUnit, call.endUnit);
+        variables.put(call.outputVar, converted);
+    }
+
     public void execute(VariableCall call) {
         Double value;
         if (call.valueVarName != "empty") {

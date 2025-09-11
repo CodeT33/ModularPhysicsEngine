@@ -33,10 +33,37 @@ public class Parser {
         Token next = peek();
         return switch (next.type) {
             case VAR -> parseVariableCall();
+            case CONVERT -> parseUnitCall();
             case USE -> parseModuleCall();
             case THEN -> parseOutputCommand();
             default -> throw new RuntimeException("Unexpected token " + next.type);
         };
+    }
+
+    public UnitConvertingCall parseUnitCall() {
+        consume(TokenType.CONVERT);
+        UnitConvertingCall call = new UnitConvertingCall();
+
+        Token valueToken2 = peek();
+        if (valueToken2.type == TokenType.NUMBER) {
+            call.value = Double.parseDouble(consume(TokenType.NUMBER).text);
+        } else if (valueToken2.type == TokenType.IDENTIFIER) {
+            call.valueVarName = consume(TokenType.IDENTIFIER).text;
+        } else {
+            throw new RuntimeException("Expected NUMBER or IDENTIFIER but got " + valueToken2.type);
+        }
+
+        consume(TokenType.SQUAREBRCLEFT);
+        call.startUnit = consume(TokenType.IDENTIFIER).text;
+        consume(TokenType.SQUAREBRCRIGHT);
+        consume(TokenType.INTO);
+        consume(TokenType.SQUAREBRCLEFT);
+        call.endUnit = consume(TokenType.IDENTIFIER).text;
+        consume(TokenType.SQUAREBRCRIGHT);
+        consume(TokenType.OUT);
+        call.outputVar = consume(TokenType.IDENTIFIER).text;
+
+        return call;
     }
 
     public VariableCall parseVariableCall () {

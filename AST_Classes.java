@@ -2,12 +2,15 @@ import java.util.*;
 
 class UnitConvertingCall {
     double value;
+    double endValue;
+    String valueVarName = "empty";
     String startUnit;
     String endUnit;
+    String outputVar;
 
     @Override
     public String toString() {
-        return "UnitConvertingCall{" + "value=" + value + ", startUnit=" + startUnit + ", endUnit=" + endUnit + "}";
+        return "UnitConvertingCall{" + "value=" + value + ", startUnit=" + startUnit + ", endUnit=" + endUnit + ", outputVar=" + outputVar + ", endValue=" + endValue + "}";
     }
 }
 

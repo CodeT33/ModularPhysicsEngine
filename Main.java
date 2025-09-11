@@ -12,9 +12,6 @@ public class Main {
 
         Parser parser = new Parser(tokens);
 
-        //List<ModuleCall> calls = parser.parseModuleCalls();
-        //OutputCommand out = parser.parseOutputCommand();
-
         Engine engine = new Engine();
         Executor executor = new Executor(engine);
 
@@ -24,24 +21,13 @@ public class Main {
                 executor.execute((VariableCall) cmd);
             } else if (cmd instanceof ModuleCall) {
                 executor.execute((ModuleCall) cmd);
+            } else if (cmd instanceof UnitConvertingCall) {
+                executor.execute((UnitConvertingCall) cmd);
             } else if (cmd instanceof OutputCommand) {
                 executor.execute((OutputCommand) cmd);
                 break;
             }
         }
-
-
-        /*
-        for (ModuleCall call : calls) {
-            //System.out.println(calls);
-            executor.execute(call);
-        }
-
-        executor.execute(out);
-        //System.out.println(out);
-        //executor.printAllVariables();
-*/
-
     }
 }
 
