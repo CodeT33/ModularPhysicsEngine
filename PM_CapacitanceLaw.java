@@ -9,8 +9,6 @@ public class PM_CapacitanceLaw extends PM_Blueprint {
         Double capacitance = inputs.get("capacitance");
         Double voltage = inputs.get("voltage");
 
-        List<Double> results = List.of();
-
         if (charge == null && capacitance != null && voltage != null) {
             charge = capacitance * voltage;
             results = List.of(charge);
@@ -23,11 +21,6 @@ public class PM_CapacitanceLaw extends PM_Blueprint {
             capacitance = charge / voltage;
             results = List.of(capacitance);
         }
-
-        for (int i = 0; i < outputKeys.size(); i++) {
-            if (i < results.size() && results.get(i) != null) {
-                outputs.put(outputKeys.get(i), results.get(i));
-            }
-        }
+        output(outputKeys);
     }
 }

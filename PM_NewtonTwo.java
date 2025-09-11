@@ -9,8 +9,6 @@ public class PM_NewtonTwo extends PM_Blueprint {
         Double mass = inputs.get("mass");
         Double acceleration = inputs.get("acceleration");
 
-        List<Double> results = List.of();
-
         if (force == null && mass != null && acceleration != null) {
             force = mass * acceleration;
             results = List.of(force);
@@ -21,13 +19,8 @@ public class PM_NewtonTwo extends PM_Blueprint {
 
         } else if (force != null && mass == null && acceleration != null) {
             mass = force / acceleration;
-            results = List.of(acceleration);
+            results = List.of(mass);
         }
-
-        for (int i = 0; i < outputKeys.size(); i++) {
-            if (i < results.size() && results.get(i) != null) {
-                outputs.put(outputKeys.get(i), results.get(i));
-            }
-        }
+        output(outputKeys);
     }
 }

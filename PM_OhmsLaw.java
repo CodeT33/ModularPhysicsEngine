@@ -9,8 +9,6 @@ public class PM_OhmsLaw extends PM_Blueprint {
         Double resistance = inputs.get("resistance");
         Double current = inputs.get("current");
 
-        List<Double> results = List.of();
-
         if (voltage == null && current != null && resistance != null) {
             voltage = current * resistance;
             results = List.of(voltage);
@@ -23,11 +21,6 @@ public class PM_OhmsLaw extends PM_Blueprint {
             current = voltage / resistance;
             results = List.of(current);
         }
-
-        for (int i = 0; i < outputKeys.size(); i++) {
-            if (i < results.size() && results.get(i) != null) {
-                outputs.put(outputKeys.get(i), results.get(i));
-            }
-        }
+        output(outputKeys);
     }
 }
