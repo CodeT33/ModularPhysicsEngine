@@ -25,8 +25,6 @@ public class PM_Round extends PM_Blueprint {
             throw new RuntimeException("Input 'decimals' is missing");
         }
 
-        List<Double> results = List.of();
-
         results = List.of(round(value, decimals));
 
         outputs.put(outputKeys.getFirst(), results.getFirst());

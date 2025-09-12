@@ -96,6 +96,7 @@ class Executor {
             case "KineticEnergy": return new PM_KineticEnergy();
             case "WorkLaw": return new PM_WorkLaw();
             case "MomentumLaw": return new PM_MomentumLaw();
+            case "PressureLaw": return new PM_PressureLaw();
             //case "BasicMath": return new PM_BasicMath();
             //Add new Module here
             default: throw new RuntimeException("Unknown module: " + moduleName);
