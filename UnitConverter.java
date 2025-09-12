@@ -1,33 +1,38 @@
 public class UnitConverter {
+
     public static double convert(double value, String unit, String endUnit) {
 
-
         class ExponentHelper {
-            /**
-             * This function outputs an exponent in relation to the prefix of SI-meter
-             */
-            int getExponent(String u) {
-                u = u.toLowerCase();
-                String prefix;
 
+            private String getPrefix(String u) {
                 if (u.endsWith("meter")) {
-                    prefix = u.substring(0, u.length() - "meter".length());
+                    return u.substring(0, u.length() - "meter".length());
 
                 } else if (u.endsWith("gram")) {
-                    prefix = u.substring(0, u.length() - "gram".length());
+                    return u.substring(0, u.length() - "gram".length());
 
                 } else if (u.endsWith("ampere")) {
-                    prefix = u.substring(0, u.length() - "ampere".length());
+                    return u.substring(0, u.length() - "ampere".length());
 
                 } else if (u.endsWith("mole")) {
-                    prefix = u.substring(0, u.length() - "mole".length());
+                    return u.substring(0, u.length() - "mole".length());
 
                 } else if (u.endsWith("candela")) {
-                    prefix = u.substring(0, u.length() - "candela".length());
+                    return u.substring(0, u.length() - "candela".length());
 
                 } else {
-                        throw new RuntimeException("Unknown unit: " + unit);
+                    throw new RuntimeException("Unknown unit: " + u);
                 }
+            }
+
+            //suffix at the end
+            private String getSuffix(String u, String prefix) {
+                return u.substring(prefix.length());
+            }
+
+            private int getExponent(String u) {
+                //u = u.toLowerCase();
+                String prefix = getPrefix(u);
 
                 switch (prefix) {
                     case "quecto":
@@ -109,17 +114,19 @@ public class UnitConverter {
             }
         }
 
-        if (
-                (unit.contains("meter") && endUnit.contains("meter")) ||
-                (unit.contains("gram") && endUnit.contains("gram")) ||
-                (unit.contains("ampere") && endUnit.contains("ampere")) ||
-                (unit.contains("mole") && endUnit.contains("mole")) ||
-                (unit.contains("candela") && endUnit.contains("candela"))
-        ) {
-            ExponentHelper helper = new ExponentHelper();
+        ExponentHelper helper = new ExponentHelper();
 
+        String prefixUnit = helper.getPrefix(unit);
+        String prefixEndUnit = helper.getPrefix(endUnit);
+        String suffixUnit = helper.getSuffix(unit, prefixUnit);
+        String suffixEndUnit = helper.getSuffix(endUnit, prefixEndUnit);
+
+        if (suffixUnit.equals(suffixEndUnit)) {
+            System.out.println("hallo");
             int exp1 = helper.getExponent(unit);
+            System.out.println("exponent1: " + exp1);
             int exp2 = helper.getExponent(endUnit);
+            System.out.println("exponent2: " + exp2);
 
             return value * Math.pow(10, exp1 - exp2);
         } else {
