@@ -11,8 +11,14 @@ public class UnitConverter {
                 } else if (u.endsWith("meter")) {
                     return u.substring(0, u.length() - "meter".length());
 
+                } else if (u.endsWith("m")) {
+                    return u.substring(0, u.length() - "m".length());
+
                 } else if (u.endsWith("gram")) {
                     return u.substring(0, u.length() - "gram".length());
+
+                } else if (u.endsWith("g")) {
+                    return u.substring(0, u.length() - "g".length());
 
                 } else if (u.endsWith("ampere")) {
                     return u.substring(0, u.length() - "ampere".length());
@@ -29,12 +35,14 @@ public class UnitConverter {
                 } else if (u.endsWith("volts")) {
                     return u.substring(0, u.length() - "volts".length());
 
+                } else if (u.endsWith("feet")) {
+                    return u.substring(0, u.length() - "feet".length());
+
                 } else {
                     throw new RuntimeException("Unknown SI unit: " + u);
                 }
             }
 
-            //suffix at the end
             private String getSuffix(String u, String prefix) {
                 return u.substring(prefix.length());
             }
@@ -130,13 +138,24 @@ public class UnitConverter {
         String suffixUnit = helper.getSuffix(unit, prefixUnit);
         String suffixEndUnit = helper.getSuffix(endUnit, prefixEndUnit);
 
+        int exp1 = helper.getExponent(unit);
+        int exp2 = helper.getExponent(endUnit);
+
         if (suffixUnit.equals(suffixEndUnit)) {
-            int exp1 = helper.getExponent(unit);
-            int exp2 = helper.getExponent(endUnit);
 
             return value * Math.pow(10, exp1 - exp2);
+
+        } else if (unit.contains("feet") && (endUnit.endsWith("meter")) || endUnit.endsWith("m")) {
+            return 0.3048 * value * Math.pow(10, exp2);
+
+        } else if ((unit.contains("meter") || unit.contains("m")) && endUnit.contains("feet")) {
+            return 3.2808399 * value * Math.pow(10, exp1);
+
         } else {
             throw new RuntimeException("\'" + unit + "' in not the same unit as '" + endUnit + "\'");
         }
     }
 }
+
+
+//suffix at the end
