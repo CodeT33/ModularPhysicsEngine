@@ -5,7 +5,10 @@ public class UnitConverter {
         class ExponentHelper {
 
             private String getPrefix(String u) {
-                if (u.endsWith("meter")) {
+                if (u.endsWith("_")) {
+                    return u.substring(0, u.length() - "_".length());
+
+                } else if (u.endsWith("meter")) {
                     return u.substring(0, u.length() - "meter".length());
 
                 } else if (u.endsWith("gram")) {
@@ -20,8 +23,14 @@ public class UnitConverter {
                 } else if (u.endsWith("candela")) {
                     return u.substring(0, u.length() - "candela".length());
 
+                } else if (u.endsWith("ohms")) {
+                    return u.substring(0, u.length() - "ohms".length());
+
+                } else if (u.endsWith("volts")) {
+                    return u.substring(0, u.length() - "volts".length());
+
                 } else {
-                    throw new RuntimeException("Unknown unit: " + u);
+                    throw new RuntimeException("Unknown SI unit: " + u);
                 }
             }
 
@@ -122,15 +131,12 @@ public class UnitConverter {
         String suffixEndUnit = helper.getSuffix(endUnit, prefixEndUnit);
 
         if (suffixUnit.equals(suffixEndUnit)) {
-            System.out.println("hallo");
             int exp1 = helper.getExponent(unit);
-            System.out.println("exponent1: " + exp1);
             int exp2 = helper.getExponent(endUnit);
-            System.out.println("exponent2: " + exp2);
 
             return value * Math.pow(10, exp1 - exp2);
         } else {
-            throw new RuntimeException("Unknown unit: " + unit);
+            throw new RuntimeException("\'" + unit + "' in not the same unit as '" + endUnit + "\'");
         }
     }
 }

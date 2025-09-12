@@ -129,7 +129,7 @@ public class Tokenizer {
             }
 
             //Words
-            if (Character.isLetter(c)) {
+            if (Character.isLetter(c) || c == '_') {
                 StringBuilder word = new StringBuilder();
                 while (position < length && (Character.isLetterOrDigit(input.charAt(position)) || input.charAt(position) == '_')) {
                     word.append(input.charAt(position));
@@ -138,27 +138,16 @@ public class Tokenizer {
                 String text = word.toString();
                 TokenType type = switch (text.toUpperCase()) {
                     case "USE" -> TokenType.USE;
-                    case "use" -> TokenType.USE;
                     case "WITH" -> TokenType.WITH;
-                    case "with" -> TokenType.WITH;
                     case "OUT" -> TokenType.OUT;
-                    case "out" -> TokenType.OUT;
                     case "THEN" -> TokenType.THEN;
-                    case "then" -> TokenType.THEN;
                     case "OUTPUT" -> TokenType.OUTPUT;
-                    case "output" -> TokenType.OUTPUT;
                     case "VIA" -> TokenType.VIA;
-                    case "via" -> TokenType.VIA;
                     case "CONVERT" -> TokenType.CONVERT;
-                    case "convert" -> TokenType.CONVERT;
                     case "INTO" -> TokenType.INTO;
-                    case "into" -> TokenType.INTO;
                     case "VAR" -> TokenType.VAR;
-                    case "var" -> TokenType.VAR;
                     case "SET" -> TokenType.SET;
-                    case "set" -> TokenType.SET;
                     case "GLOBALCONDS" -> TokenType.GLOBALCONDS;
-                    case "globalconds" -> TokenType.GLOBALCONDS;
                     //Add new word here
                     default -> TokenType.IDENTIFIER;
                 };
