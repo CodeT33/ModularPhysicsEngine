@@ -136,13 +136,12 @@ public class Parser {
 
         return cmd;
     }
-
+/*
     public List<ModuleCall> parseModuleCalls() {
         List<ModuleCall> calls = new ArrayList<>();
         while (peek().type == TokenType.USE) {
             calls.add(parseModuleCall());
         }
         return calls;
-    }
-
+    }*/
 }

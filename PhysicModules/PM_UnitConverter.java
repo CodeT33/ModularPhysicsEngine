@@ -153,6 +153,7 @@ public class PM_UnitConverter {
                     case "R":
                         return 27;
                     case "quetta":
+                    case "Q":
                         return 30;
                     default:
                         throw new IllegalArgumentException("Unknown unit: " + u);

@@ -14,6 +14,7 @@ public class Main {
 
         Engine engine = new Engine();
         Executor executor = new Executor(engine);
+        executor.initializeConstants();
 
         while (true) {
             Object cmd = parser.parseNextCommand();
@@ -30,11 +31,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-
-
-
-

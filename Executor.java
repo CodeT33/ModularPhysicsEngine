@@ -5,6 +5,15 @@ import java.util.*;
 class Executor {
     private final Map<String, Double> variables = new HashMap<>();
 
+    public void initializeConstants() {
+        variables.put("MATH_PI", Math.PI);
+        variables.put("MATH_E", Math.E);
+        variables.put("UNIV_GAS_CONST", 8.314);//in J*K^(-1)*mol^(-1)
+        variables.put("STANDARD_GRAVITY", 9.80665);//in m/s^2
+        variables.put("SPEED_OF_LIGHT", 299792458.0);//in m/s
+        //variables.put("", 0.0);
+    }
+
     private final Engine engine;
 
     public Executor(Engine engine) {
@@ -89,25 +98,25 @@ class Executor {
     }
 
     private PM_Blueprint createModule(String moduleName) {
-        switch (moduleName) {
-            case "Round": return new PM_Round();
-            case "OhmsLaw": return new PM_OhmsLaw();
-            case "PowerLaw": return new PM_PowerLaw();
-            case "PowerLawExt": return new PM_PowerLawExt();
-            case "CapacitanceLaw": return new PM_CapacitanceLaw();
-            case "NewtonTwo": return new PM_NewtonTwo();
-            case "KineticEnergy": return new PM_KineticEnergy();
-            case "WorkLaw": return new PM_WorkLaw();
-            case "MomentumLaw": return new PM_MomentumLaw();
-            case "PressureLaw": return new PM_PressureLaw();
-            case "DensityLaw": return new PM_DensityLaw();
-            case "HookesLaw": return new PM_HookesLaw();
-            case "SpecificHeat": return new PM_SpecificHeat();
-            case "IdealGasLaw": return new PM_IdealGasLaw();
-            case "FreqWavelengthRel": return new PM_FreqWavelengthRel();
+        return switch (moduleName) {
+            case "Round" -> new PM_Round();
+            case "OhmsLaw" -> new PM_OhmsLaw();
+            case "PowerLaw" -> new PM_PowerLaw();
+            case "PowerLawExt" -> new PM_PowerLawExt();
+            case "CapacitanceLaw" -> new PM_CapacitanceLaw();
+            case "NewtonTwo" -> new PM_NewtonTwo();
+            case "KineticEnergy" -> new PM_KineticEnergy();
+            case "WorkLaw" -> new PM_WorkLaw();
+            case "MomentumLaw" -> new PM_MomentumLaw();
+            case "PressureLaw" -> new PM_PressureLaw();
+            case "DensityLaw" -> new PM_DensityLaw();
+            case "HookesLaw" -> new PM_HookesLaw();
+            case "SpecificHeat" -> new PM_SpecificHeat();
+            case "IdealGasLaw" -> new PM_IdealGasLaw();
+            case "FreqWavelengthRel" -> new PM_FreqWavelengthRel();
             //Add new PModules here
-            default: throw new RuntimeException("Unknown module: " + moduleName);
-        }
+            default -> throw new RuntimeException("Unknown module: " + moduleName);
+        };
     }
 
     public void printAllVariables() {
