@@ -14,14 +14,14 @@ The Modular Physics Engine - MPE for short - is the program, that handles DPL-In
 
 ---
  
- - [**Querks of DPL**](#querks-of-dpl)
+ - [**Querks** of DPL](#querks-of-dpl)
  - [**Variables**](#variables)
  - [**Constants**](#constants)
  - [**Physics Modules**](#physics-modules)
  - [**Rounding Decimals**](#round-decimals)
  - [**Unit Conversion**](#unit-conversion)
- - [**Output and Execute**](#output-and-execute)
- - [**DPL Examples**](#dpl-examples)
+ - [**Output** and **Execute**](#output-and-execute)
+ - [Practical DPL **Examples**](#dpl-examples)
 
 ## Querks of DPL
 
@@ -30,23 +30,29 @@ The Modular Physics Engine - MPE for short - is the program, that handles DPL-In
 1. Keywords in DPL are not case-sensitive (`USE` is the same as `use`)
 2. Variables and module names are case-sensitive (`Rounded_voltage` is not the same as `rounded_voltage`)
 3. Measurement units are not saved internally
-4. A DPL-Command is executed after an OUTPUT-event and an enter-press at the semicolon.
+4. A DPL-command is executed after an OUTPUT-event and an enter-press at the semicolon.
 
 ## Variables
 
 ---
 
 Variables are a way to give numbers and outputs a descriptive name. In DPL they are saved into a hashmap.
-That means they are saved as pairs of Name and Value.
+That means they are saved as pairs of `name` and `value`.
 Therefor internally there are no saved measurement units for variables - instead the Unit Converter gives the power of converting to the user.
 
 Variables have to start with a letter or underscore. They can include numbers.
 
 ### Syntax
 
-**Creating a variable:** `VAR <varName> = <value>`
+**Creating a variable:** 
+```
+VAR <varName1> = <value>
+```
 
-**Assigning a variable to a variable:** `VAR <varName> = <varName>`
+**Assigning a variable to a variable:** 
+```
+VAR <varName2> = <varName1>
+```
 
 ## Constants
 
@@ -63,7 +69,7 @@ Just like variables constants are also saved into the variable-hashmap and can b
  - $standard\_gravity$: `STANDARD_GRAVITY` ($9.80665 \ m/s^2$)
  - $speed\_of\_light$: `SPEED_OF_LIGHT` ($299792458.0 \ m/s$)
 
-Note that in contrast to keywords, constants are case-sensitive and always written in capital letters.
+_Note that constants are case-sensitive and always written in capital letters._
 
 ## Physics Modules
 
@@ -79,7 +85,10 @@ This formula accepts `current`, `voltage` and `resistance`.
 A Physics Module (PM) is essentially a formula which accepts inputs of units and outputs the missing one as in the example above.
 They can also be chained together which allows for complex physical calculations.
 
-For the example above the Syntax would look something like this: `USE OhmsLaw WITH current = 55, resistance = 30 OUT voltage_out` 
+For the example above the syntax would look something like this: 
+```
+USE OhmsLaw WITH current = 55, resistance = 30 OUT voltage_out
+``` 
 Here the value of the output voltage is stored into the variable `voltage_out`.
 
 ### Syntax
@@ -92,9 +101,11 @@ USE <moduleName> WITH <input1> = <value1>, <input2> = <value2>, ... OUT <output>
 **Chaining of Physics Modules:** 
 
 ```
-USE <moduleName> WITH <input1> = <value1>, <input2> = <value2>, ... OUT <output>
-USE <moduleName> WITH <input1> = <output>, <input2> = <value3>, ... OUt <output2>
+USE <moduleName> WITH <input1> = <value1>, <input2> = <value2>, ... OUT <output1>
+USE <moduleName> WITH <input1> = <output1>, <input2> = <value3>, ... OUt <output2>
 ```
+
+_Note that the number of required inputs depends on the module._-
 
 ### Supported PM-inputs
 
@@ -153,14 +164,15 @@ USE <moduleName> WITH <input1> = <output>, <input2> = <value3>, ... OUt <output2
 | Ideal Gas Law        | `IdealGasLaw`    | $pressure \cdot volume = amount\_of\_substance \cdot gas\_constant \cdot temperature$ |
 | Frequency-Wavelength | `FreqWaveRel`    | $wavelength = speed\_of\_light/frequency$                                             |
 
-Note that if you want to input units you use the description of the Formula. E.g. to use `OhmsLaw` inputs of `current`, `voltage` or `resistance` are possible.
+_Note that if you want to input units you use the description of the Formula. 
+E.g. to use `OhmsLaw` inputs of `current`, `voltage` or `resistance` are possible._
 
 
 ## Round Decimals
 
 ---
 
-In physics outputs ofter have a lot of decimals. With the PM `Round` you can reduce them to $n$ decimals after the comma.
+In physics outputs ofter have a lot of decimals. With the module `Round` you can reduce them to $n$ decimals after the comma.
 The `Round` Module accepts two values:
 
 1. `value`: this is the value or variable you want to reduce
@@ -236,14 +248,14 @@ candela
 If you don't have a specific suffix for conversion you can use an underscore like:
 `CONVERT 5000[_] INTO [kilo_] OUT kilo_out`
 
-Note that you can also use short-forms like `km` instead of `kilometer`. 
+Note that you can also use short-forms like `km` instead of `kilometer` but can not mix them.
 
 
 ## Output and Execute
 
 ---
 
-Before a DPL-command executes, you have to describe which outputs you want displayed. 
+Before a DPL-command executes, you have to describe which outputs and how you want them to be displayed. 
 For this matter we use OUTPUT-events which take up to an unlimited amount of comma-separated variables as inputs.
 
 There are different ways to output in DPL. The most common is the use of the `Display`.
@@ -261,10 +273,12 @@ THEN OUTPUT <variable1>, <variable2>, ... VIA <displayMethod>;
 THEN OUTPUT <variable1>, <variable2>, ... VIA Display;
 ```
 
-Note that there is a semicolon at the end of an output-event. 
+Note that there is a semicolon at the end of an OUTPUT-event. 
 Written DPL-code only executes after this semicolon is written and enter is pressed.
 
 ## DPL Examples
+
+
 
 
 
