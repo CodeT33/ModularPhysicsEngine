@@ -38,8 +38,35 @@ public class UnitConverter {
                 } else if (u.endsWith("feet")) {
                     return u.substring(0, u.length() - "feet".length());
 
+                } else if (u.endsWith("ft")) {
+                    return u.substring(0, u.length() - "ft".length());
+
+                } else if (u.endsWith("inches")) {
+                    return u.substring(0, u.length() - "inches".length());
+
+                } else if (u.endsWith("in")) {
+                    return u.substring(0, u.length() - "in".length());
+
+                } else if (u.endsWith("yards")) {
+                    return u.substring(0, u.length() - "yards".length());
+
+                } else if (u.endsWith("yds")) {
+                    return u.substring(0, u.length() - "yds".length());
+
+                } else if (u.endsWith("miles")) {
+                    return u.substring(0, u.length() - "miles".length());
+
+                } else if (u.endsWith("mi")) {
+                    return u.substring(0, u.length() - "mi".length());
+
+                } else if (u.endsWith("nautical_miles")) {
+                    return u.substring(0, u.length() - "nautical_miles".length());
+
+                } else if (u.endsWith("nmi")) {
+                    return u.substring(0, u.length() - "nmi".length());
+
                 } else {
-                    throw new RuntimeException("Unknown SI unit: " + u);
+                    throw new RuntimeException("Unknown unit: " + u);
                 }
             }
 
@@ -142,13 +169,12 @@ public class UnitConverter {
         int exp2 = helper.getExponent(endUnit);
 
         if (suffixUnit.equals(suffixEndUnit)) {
-
             return value * Math.pow(10, exp1 - exp2);
 
-        } else if (unit.contains("feet") && (endUnit.endsWith("meter")) || endUnit.endsWith("m")) {
+        } else if ((unit.equals("feet") || unit.equals("ft")) && (endUnit.endsWith("meter")) || endUnit.endsWith("m")) {
             return 0.3048 * value * Math.pow(10, exp2);
 
-        } else if ((unit.contains("meter") || unit.contains("m")) && endUnit.contains("feet")) {
+        } else if ((unit.contains("meter") || unit.contains("m") && (endUnit.equals("feet"))) || endUnit.equals("ft")) {
             return 3.2808399 * value * Math.pow(10, exp1);
 
         } else {
