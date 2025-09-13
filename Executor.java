@@ -13,7 +13,7 @@ class Executor {
 
     public void execute(UnitConvertingCall call) {
         Double value;
-        if (call.valueVarName != "empty") {
+        if (!Objects.equals(call.valueVarName, "empty")) {
             value = variables.get(call.valueVarName);
             if (value == null) {
                 throw new RuntimeException("Variable " + call.valueVarName + " not found");
@@ -22,13 +22,13 @@ class Executor {
             value = call.value;
         }
 
-        Double converted = UnitConverter.convert(value, call.startUnit, call.endUnit);
+        Double converted = PM_UnitConverter.convert(value, call.startUnit, call.endUnit);
         variables.put(call.outputVar, converted);
     }
 
     public void execute(VariableCall call) {
         Double value;
-        if (call.valueVarName != "empty") {
+        if (!Objects.equals(call.valueVarName, "empty")) {
             value = variables.get(call.valueVarName);
             if (value == null) {
                 throw new RuntimeException("Variable " + call.valueVarName + " not found");
@@ -93,14 +93,19 @@ class Executor {
             case "Round": return new PM_Round();
             case "OhmsLaw": return new PM_OhmsLaw();
             case "PowerLaw": return new PM_PowerLaw();
+            case "PowerLawExt": return new PM_PowerLawExt();
             case "CapacitanceLaw": return new PM_CapacitanceLaw();
             case "NewtonTwo": return new PM_NewtonTwo();
             case "KineticEnergy": return new PM_KineticEnergy();
             case "WorkLaw": return new PM_WorkLaw();
             case "MomentumLaw": return new PM_MomentumLaw();
             case "PressureLaw": return new PM_PressureLaw();
-            //case "BasicMath": return new PM_BasicMath();
-            //Add new Module here
+            case "DensityLaw": return new PM_DensityLaw();
+            case "HookesLaw": return new PM_HookesLaw();
+            case "SpecificHeat": return new PM_SpecificHeat();
+            case "IdealGasLaw": return new PM_IdealGasLaw();
+            case "FreqWavelengthRel": return new PM_FreqWavelengthRel();
+            //Add new PModules here
             default: throw new RuntimeException("Unknown module: " + moduleName);
         }
     }

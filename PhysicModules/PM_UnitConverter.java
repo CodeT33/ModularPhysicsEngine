@@ -1,4 +1,6 @@
-public class UnitConverter {
+package PhysicModules;
+
+public class PM_UnitConverter {
 
     public static double convert(double value, String unit, String endUnit) {
 
