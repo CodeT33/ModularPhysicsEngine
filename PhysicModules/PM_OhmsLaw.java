@@ -1,3 +1,5 @@
+package PhysicModules;
+
 import java.util.List;
 
 public class PM_OhmsLaw extends PM_Blueprint {

@@ -1,3 +1,5 @@
+package PhysicModules;
+
 import java.util.List;
 
 public class PM_PowerLaw extends PM_Blueprint {
