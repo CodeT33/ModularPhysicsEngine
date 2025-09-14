@@ -114,6 +114,13 @@ class Executor {
             case "SpecificHeat" -> new PM_SpecificHeat();
             case "IdealGasLaw" -> new PM_IdealGasLaw();
             case "FreqWavelengthRel" -> new PM_FreqWavelengthRel();
+
+            case "Divide" -> new PM_Divide();
+            case "Multiply" -> new PM_Multiply();
+            case "Addition" -> new PM_Addition();
+            case "Subtraction" -> new PM_Subtraction();
+            case "Exponentialize" -> new PM_Exponentialize();
+            case "Squareroot" -> new PM_Squareroot();
             //Add new PModules here
             default -> throw new RuntimeException("Unknown module: " + moduleName);
         };

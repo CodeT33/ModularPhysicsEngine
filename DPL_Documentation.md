@@ -278,13 +278,40 @@ Written DPL-code only executes after this semicolon is written and enter is pres
 
 ## DPL Examples
 
+---
 
+### Example One
 
+A car is driving along a $1.6km$ long street. For this it takes $24s$. 
+Calculate it's velocity in $m/s$.
 
+**Physics:**
+$$1.600km = 1600m$$
+$$v_1 = \frac{1600m}{24s} = 66.66 m/s$$
 
+**DPL:**
+```
+VAR street = 1.6
+VAR time = 24
 
+CONVERT street[kilometer] INTO [meter] OUT street_in_m
+USE Divide WITH numerator = street_m, denominator = time OUT velocity_out
 
+THEN OUTPUT velocity_out VIA Display;
+```
 
+**DPL (compact):**
+``` 
+convert 1.6[km] into [m] out A use Divide with n = A, d = 24 out B then output B via Display;
+```
+
+### Example Two
+
+Auf Schiffen wird die Wassertiefe bestimmt, indem die Laufzeit eines vom Schiff ausgesendeten und am Meeresboden reflektierten Ultraschallsignals gemessen wird. 
+Die Schallgeschwindigkeit in Wasser beträgt $1500m/s$. Berechnen Sie die Wassertiefe für die Laufzeit $0.5s$.
+
+**Physics:**
+$$$$
 
 
 
